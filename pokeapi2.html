@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokeapi</title>
+</head>
+<body>
+   
+<!-- AGREGADO: buscador -->
+ <br>
+<input type="text" id="pokemon" placeholder="Escribe un Pokémon">
+<button onclick="buscar()">Buscar</button>
+
+<!-- AGREGADO: imagen -->
+<br>
+<img id="imagen" width="400">
+
+<script>
+
+ fetch("https://pokeapi.co/api/v2/pokemon/squirtle") 
+   .then(response=> response.json())
+   .then(data => {
+    console.log("Nombre:" , data.name);
+    console.log("Altura:" , data.height);
+    console.log("Peso:" , data.weight);
+    console.log("Tipos:" , data.types.map(t => t.type.name).join(" ; "));
+
+    // AGREGADO: imagen de squirtle inicial
+    document.getElementById("imagen").src = data.sprites.front_default;
+   })
+
+// AGREGADO: función de búsqueda
+function buscar() {
+    let nombre = document.getElementById("pokemon").value.toLowerCase();
+
+    fetch("https://pokeapi.co/api/v2/pokemon/" + nombre)
+      .then(response => response.json())
+      .then(data => {
+
+        console.log("Nombre:" , data.name);
+        console.log("Altura:" , data.height);
+        console.log("Peso:" , data.weight);
+        console.log("Tipos:" , data.types.map(t => t.type.name).join(" ; "));
+
+        // AGREGADO: imagen del Pokémon buscado
+        document.getElementById("imagen").src = data.sprites.front_default;
+
+      })
+}
+
+</script>
+
+  
+</body>
+
+</html>
+
+ 
